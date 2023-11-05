@@ -1,0 +1,2 @@
+kaggle==1.5
+urllib3==1.22
