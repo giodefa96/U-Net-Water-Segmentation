@@ -5,6 +5,7 @@ import numpy as np
 
 import hyperparameters as hp
 
+
 def make_predictions(model: torch.nn.Module, data: list, device: torch.device = hp.Hyperparameters.DEVICE):
     pred_probs = []
     model.eval()

@@ -5,7 +5,7 @@ from PIL import Image
 import albumentations as A
 
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 from torch.utils.data import random_split
 
 import hyperparameters as hp

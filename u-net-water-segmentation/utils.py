@@ -1,10 +1,13 @@
 import matplotlib.pyplot as plt
+
 import torch
 
 from PIL import Image  
 import numpy as np  
+import pandas as pd  
 
 import hyperparameters as hp
+
 
 def plot_and_save_loss(total_train_losses, total_val_losses, save_path='loss_plot.png'):
     """
@@ -30,23 +33,6 @@ def plot_and_save_loss(total_train_losses, total_val_losses, save_path='loss_plo
     plt.show()
     
 
-
-# def plot_true_pred(preds):
-#     for idx in range(100):
-#     # plot two images
-#     fig, ax = plt.subplots(1, 3, figsize=(12, 6))
-#     ax[0].imshow(res[idx][1].detach().numpy(), cmap='gray')
-#     ax[0].set_title('pred')
-
-#     ax[1].imshow(list_data[idx].detach().numpy().transpose(1,2,0), cmap='gray')
-#     ax[1].set_title('Mask')
-
-#     ax[2].imshow(list_mask[idx].detach().numpy(), cmap='gray')
-#     ax[2].set_title('Mask')
-
-
-plt.show()
-
 # load models
 def load_model(model, model_path):
     model = model.to(hp.Hyperparameters.DEVICE)
@@ -68,3 +54,15 @@ def plot_predictions(images, preds):
             
         ax[1].imshow(img_data, cmap='gray')    
         plt.show()    
+        
+
+def save_torch_model(model, epoch, path, model_name):
+    torch.save(model.state_dict(), f'{path}/{model_name}_{epoch}.pt')
+
+
+
+  
+def save_metrics_to_csv(train_losses, val_losses, train_f1, val_f1, train_accuracy, val_accuracy, filename='train_val_measures.csv'):  
+    temp_df = pd.DataFrame(list(zip(train_losses, val_losses, train_f1, val_f1, train_accuracy, val_accuracy)),  
+                           columns=['train_loss', 'val_loss', 'train_f1', 'val_f1', 'train_accuracy', 'val_accuracy'])  
+    temp_df.to_csv(filename, index=False)  
